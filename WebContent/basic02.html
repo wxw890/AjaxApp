@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script>
+var httpRequest = null;
+function fnCallback() {
+	if(httpRequest.readyState==4){
+		if(httpRequest.status==200){
+			alert(httpRequest.responseText);
+				
+		}
+		else{
+			alert(httpRequest.status);
+		}
+	}
+}
+
+function fnProcess(url){
+	httpRequest = new XMLHttpRequest();
+	
+	httpRequest.open("GET", url, true); //true는 비동기식 , open()는 준비단계
+	httpRequest.onreadystatechange = fnCallback;//onreadystatechange(서버와 클라이언트 관계에서 일어나는 일이 발생할대마다 발생하는 
+												//이벤트)이벤트가 발생할때마다 callback을 호출하겠다는 뜻
+	httpRequest.send(null);//전송 method 방식이 GET박식이고 그러므로 send() null값이 들어간다. 이유는 GET방식에는 url에 param값이 들어갈 수 있으므로...
+}
+</script>
+</head>
+<body>
+ <input type="button" value="euc-msg.txt" onclick="fnProcess('euc-msg.txt')" /><br/><br/>
+  <input type="button" value="utf-msg.txt" onclick="fnProcess('utf-msg.txt')" /><br/><br/><!-- 윗 버튼읜 ANSI로 정장, 아래는 UTF-8로 저장되었는데 UTF-8은 한글을 지원한다. -->
+  <input type="button" value="euc-msg.jsp" onclick="fnProcess('euc-msg.jsp')" /><br/><br/><!-- jsp파일 소스에 <%@ page contentType="text/plain; charset=euc-kr"%>를 적어주었다. -->
+  <input type="button" value="utf-msg.jsp" onclick="fnProcess('utf-msg.jsp')" /><br/><br/><!-- UTF-8로 역시 저장하면 해택이 그만큼 많다. -->
+</body>
+</html>

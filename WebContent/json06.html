@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script src="ajax.js"></script>
+<script>
+
+function fnSubmit(){
+	   
+	      
+	      
+	   sendRequest("GET", "member_xml_json.jsp", null, fncallback1);//인자 : 전송방식, 서버페이지, 파라미터, 콜백함수 (데이터 요청)
+	   
+}
+
+function fncallback1(){
+	      if(httpRequest.readyState==4){
+	         if(httpRequest.status==200){
+	        	 //alert(httpRequest.responseText);
+	        	var xmlDoc = httpRequest.responseXML//xml로 우선 만든다.
+	        	var code = xmlDoc.getElementsByTagName("code").item(0).firstChild.nodeValue;//item()==[]은 같다.
+	        	//alert(code);
+	        	if(code =="success"){
+	        		var data = xmlDoc.getElementsByTagName("data").item(0).firstChild.nodeValue;
+	        		var jasonData = eval("("+data+")");
+	        		alert(jasonData.name + "," + jasonData.id + ","+ jasonData.age);
+	        	}
+	        	
+	        	
+	        	
+	         }
+	      }
+}
+window.onload= function(){fnSubmit();}
+</script>
+</head>
+<body>
+<h1>서버로부터 xml타입rhk json타입의 데이터(배열)를 받는 예제</h1>
+
+</body>
+</html>

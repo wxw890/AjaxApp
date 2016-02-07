@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<!-- jQuary에서 $(documet).ready()는 스크립트의 window.onload와 유사함, 모든 동작은 funtion으로 시작해야함-->
+<script>
+	$(document).ready(
+			function(){
+				$.ajax({
+					type:"GET",
+					dataType:"xml",
+					url:"member_json1.jsp",
+					success:function(data){
+						var jsonData = $(data).find("info");
+						
+						if(jsonData.length > 0){
+							var str = "";
+						$(jsonData).each(
+							function(i){
+								str +=jsonData[i].no + ","
+								+ jsonData[i].name + ","
+								+ jsonData[i].job + "\n";
+							}		
+						);
+						alert(str);
+					}
+				}
+			});
+		}	
+	);
+</script>
+</head>
+<body>
+</body>
+</html>

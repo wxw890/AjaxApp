@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script src="ajax.js"></script>
+<script>
+
+   function fnSubmit(){
+      sendRequest("GET", "basic05_proc.jsp", null, callback)
+   }
+   
+   function callback(){
+      if(httpRequest.readyState==4){
+         if(httpRequest.status==200){
+            //alert(httpRequest.responseText);
+            
+            var data=httpRequest.responseText;
+            var span = document.getElementById("maxTemp");
+            
+            var splitData=data.split(",");
+            var arrData=new Array(splitData.length);
+            
+            for(var i=0; i<splitData.length; i++){
+               arrData[i]=parseFloat(splitData[i]);
+            }
+            span.innerHTML=Math.max.apply(null,splitData);
+         }
+      }
+   }
+   
+   window.onload = function(){ fnSubmit(); }
+</script>
+</head>
+<body>
+   <h2>최근 5일간의 최고 기온 : <span id="maxTemp"></span></h2>
+</body>
+</html>

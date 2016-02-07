@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script src="ajax.js"></script>
+<script>
+
+   function fnSubmit(){
+	   sendRequest("GET", "book.jsp", null, fncallback);//인자 : 전송방식, 서버페이지, 파라미터, 콜백함수
+   }
+   
+   function fncallback(){
+      if(httpRequest.readyState==4){
+         if(httpRequest.status==200){
+        	//alert(httpRequest.responseText); // 그냥 텍스트로 받는다.
+        	//alert(httpRequest.responseXML);//객체로 받는다.
+        	var data = httpRequest.responseXML
+        	var booklist = data.getElementsByTagName("book");
+        	var msg = "책권수:" + booklist.length + "권\n";
+        	for(i=0; i<booklist.length; i++){
+        		var book = booklist.item(i);
+        		var title = book.getElementsByTagName("title").item(0).firstChild.nodeValue;
+        		var author = book.getElementsByTagName("author").item(0).firstChild.nodeValue;
+        		//alert(title);
+        		msg += title + "(" + author + ")\n";
+        	}
+        	
+        	alert(msg);
+         }
+      }
+   }
+   
+   window.onload = function(){ fnSubmit(); }
+</script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script src="ajax.js"></script>
+<script>
+
+function fnSubmit(){
+	   
+	      
+	      
+	   sendRequest("GET", "member_xml.jsp", null, fncallback1);//인자 : 전송방식, 서버페이지, 파라미터, 콜백함수 (데이터 요청)
+	   
+}
+
+function fncallback1(){
+	      if(httpRequest.readyState==4){
+	         if(httpRequest.status==200){
+	        	 //alert(httpRequest.responseText);
+	        	 var xmlDoc = httpRequest.responseXML;
+	        	 var code = xmlDoc.getElementsByTagName("code").item(0).firstChild.nodeValue;
+	        	 if(code == "success")
+	        		 alert(code);
+	         }
+	      }
+}
+window.onload= function(){fnSubmit();}
+</script>
+</head>
+<body>
+<h1>서버로부터 xml타입의 데이터를 받는 예제</h1>
+<input type="button" value="실행" id="go" onclick="fnSubmit();"/>
+</body>
+</html>

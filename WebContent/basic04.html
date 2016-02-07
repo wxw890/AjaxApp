@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script src="ajax.js"></script>
+<script>
+	
+	function fnSubmit(){//자바 스크립트가 데이터를 직접 서버에 전송할려고 만듬(이 기술 자체로 서버에 전송할때 프로그래밍을 할수 있다는 뜻!!!!많은 일을 할수있음)
+	
+		var param = "name="+document.getElementById("name").value;;
+		sendRequest("GET", "basic01_proc.jsp", param, callback)
+	}
+	function callback() {
+		if(httpRequest.readyState==4){
+			if(httpRequest.status==200){
+				//alert(httpRequest.responseText);
+				var div = document.getElementById("display");
+				div.innerHTML = httpRequest.responseText;
+				
+			}
+		}
+	}
+</script>
+</head>
+<body>
+<input type="text" name="name" id="name" />
+<input type="button" value="전송" onclick="fnSubmit()"/>
+<hr/>
+<div id="display"></div>
+</body>
+</html>

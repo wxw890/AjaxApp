@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script src="ajax.js"></script>
+<script>
+	var xmlDoc="", xslDoc="";
+   function fnSubmit(){
+	   var param=document.getElementById("birthDate").value;
+	      
+	      var param= "param=" + param;
+	   sendRequest("GET", "/AjaxApp/valid.do", param, fncallback1);//인자 : 전송방식, 서버페이지, 파라미터, 콜백함수 (데이터 요청)
+	   
+   }
+  
+   function fncallback1(){
+	      if(httpRequest.readyState==4){
+	         if(httpRequest.status==200){
+	        	 
+	        	var data = httpRequest.responseXML
+	         	document.getElementById("dateMessage").innerHTML = data.getElementsByTagName("message").item(0).firstChild.nodeValue;
+	         	
+	         	
+	         	
+	         	//alert(data);
+	         }
+	      }
+   }
+  
+   
+   window.onload = function(){ fnSubmit(); }
+</script>
+</head>
+<body>
+<h1>Ajax를 이용한 유효성 검사</h1>
+날짜 입력 : <input type="text" size="10" id="birthDate"/>
+<span id="dateMessage"></span>
+</body>
+</html>

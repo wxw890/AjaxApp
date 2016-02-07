@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+
+<script>
+var httpRequest = null;
+function fnCallback() {
+	if(httpRequest.readyState==4){
+		if(httpRequest.status==200){
+			var text = httpRequest.responseText;//서버 요청해서 응답한 문자값을 text에 저장
+			var div = document.getElementById("newsList");//내장객체 사용해서 div에 id="newsList"를 주소를 가져온다
+			div.innerHTML = text;
+				
+		}
+		else{
+			alert(httpRequest.status);
+		}
+	}
+}
+
+function fnProcess(){
+	httpRequest = new XMLHttpRequest();
+	
+	httpRequest.open("GET", "basic03_proc.jsp", true); //true는 비동기식 , open()는 준비단계
+	httpRequest.onreadystatechange = fnCallback;//onreadystatechange(서버와 클라이언트 관계에서 일어나는 일이 발생할대마다 발생하는 
+												//이벤트)이벤트가 발생할때마다 callback을 호출하겠다는 뜻
+	httpRequest.send(null);
+}
+
+window.onload = function(){//페이지가 실행되자마자 실행
+	fnProcess();
+}
+</script>
+</head>
+<body>
+<h1>오늘의 뉴스</h1>
+아래에 오늘의 뉴스가 출력됩니다.
+
+<div id="newsList"></div>
+</body>
+</html>

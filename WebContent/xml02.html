@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script src="ajax.js"></script>
+<script>
+	var xmlDoc="", xslDoc="";
+   function fnSubmit(){
+	   sendRequest("GET", "book.jsp", null, fnCallback1);//인자 : 전송방식, 서버페이지, 파라미터, 콜백함수 (데이터 요청)
+	   
+   }
+ 
+   function fnCallback1() {
+	      if (httpRequest.readyState == 4) {
+	         if (httpRequest.status == 200) {
+	            //alert(httpRequest.responseText);
+	            // XML로 받으려면 아래와 같이 받아야한다.
+	            // 객체로 전달이 된다. 그래야 DOM으로 접근이 가능
+	            //alert(httpRequest.responseXML);
+	            xmldoc = httpRequest.responseXML;
+	            sendRequest("GET", "book.xsl", null, fncallback2);
+
+	         }
+	      }
+
+	   }
+   function fncallback2(){
+	      if(httpRequest.readyState==4){
+	         if(httpRequest.status==200){
+	        	 xsldoc = httpRequest.responseXML;//디자인 객체 가져온다.
+	        	 //디자인 + 데이터 합치기
+	        	 if(xmldoc == null || xsldoc == null){
+	                 return;
+	              }
+	              
+	              var div = document.getElementById("booklist");
+	              if(window.ActiveXObject){
+	                 div.innerHTML = xmldoc.transformNode(xsldoc);
+	              }
+	              else{
+	                 var xslproc = new XSLTProcessor();
+	                 xslproc.importStylesheet(xsldoc);
+	                 var fragment = xslproc.transformToFragment(xmldoc, document);
+	                 div.appendChild(fragment);
+	              }
+	         }
+	      }
+	}
+   
+   window.onload = function(){ fnSubmit(); }
+</script>
+</head>
+<body>
+<h1>신규 책 목록</h1>
+<div id="bookList"></div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+9<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+<script>
+   window.onload=function(){
+	   /*
+      Member=function(id,name,age){ //여기서 function 생성자
+         this.id=id;
+         this.name=name;
+         this.age=age;
+      }
+      
+      Member.prototype.setValue= function(id, name, age){
+         this.id=id;
+         this.name=name;
+         this.age=age;
+      }
+      
+      Member.prototype.getAge=function(){
+         return this.age;
+      }
+      
+      Member.prototype.toString=function(){
+         return this.id+"["+this.name+"]의 나이는" + this.age;
+      }
+      */
+      /*
+      Member.prototype={};
+      var hong = new Member("hong", "홍길동", 24);
+      alert(hong.toString());
+   }*/
+   
+   Member.prototype ={
+		   setValue:function(id, name, age){
+			   this.id = id;
+			   this.name = name;
+			   this.age = age;
+		   },
+		   getAge:function(){
+			   return this.age;
+		   },
+		   toString:function(){
+			   return this.id + "[" +this.name+"]의 나이는" + this.age;
+		   }
+   };
+   var hong = new Member("hong", "홍길동", 24);
+   alert(hong.toString());
+   
+</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script src="ajax.js"></script>
+<script>
+
+   function fnSubmit(){
+      var key=document.getElementById("key").value;
+      document.getElementById("keypressed").value=key;
+      
+      var param= "key=" + key;
+      sendRequest("GET", "/AjaxApp/majax.action", param, callback);
+   }
+   
+   function callback(){
+      if(httpRequest.readyState==4){
+         if(httpRequest.status==200){
+            var data=httpRequest.responseText;
+            document.getElementById("decimal").value=data;            
+         }
+      }
+   }
+   
+</script>
+</head>
+<body>
+   <h2>Ajax를 이용한 문자 변환</h2>
+   키를 입력하시오 : <input type="text" id="key" name="key" onkeyup="fnSubmit()" />
+   <br /><br />
+   입력된 키 값 : <input type="text" id="keypressed" name="keypressed"/>
+   <br /><br />
+   변환된 키 값 : <input type="text" id="decimal" name="decimal" />
+</body>
+</html>

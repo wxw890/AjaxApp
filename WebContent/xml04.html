@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script src="ajax.js"></script>
+<script>
+	var xmlDoc="", xslDoc="";
+   function fnSubmit(){
+	   var param = "task=reset";
+	   sendRequest("GET", "/AjaxApp/dynamic.do", param, fncallback1);//인자 : 전송방식, 서버페이지, 파라미터, 콜백함수 (데이터 요청)
+	   
+   }
+  
+   function fncallback1(){
+	      if(httpRequest.readyState==4){
+	         if(httpRequest.status==200){
+	        	setInterval(pullServer, 5000)//5초마다 함수를 호출하겠다는 뜻
+	         }
+	      }
+   }
+   function pullServer(){
+	   var param ="task=bravodfdfdf";
+	   sendRequest("GET", "/AjaxApp/dynamic.do", param, fncallback2);
+   }
+   function fncallback2(){
+	      if(httpRequest.readyState==4){
+	         if(httpRequest.status==200){
+	        	 //document.getElementById("test").innerHTML = httpRequest.responseText;
+	        	 var data = httpRequest.responseXML;
+	        	 var msg = data.getElementsByTagName("message").item(0).firstChild.nodeValue;
+	        	 //alert(msg);
+	        	 var table = document.getElementById("dynamicUpdateArea");
+	        	 var tbody = table.getElementsByTagName("tbody").item(0);//<tbody>태그
+	        	 var first_row = tbody.getElementsByTagName("tr").item(0);//<tr>태그 
+	        	 
+	        	 var new_row = createRow(msg);
+	        	 tbody.insertBefore(new_row, first_row);//insertBefore()는 스크립트에서 객체생성방법
+	        	 
+	         }
+	      }
+}
+   function createRow(msg){
+	   var row= document.createElement("tr");
+	   var cell = document.createElement("td");
+	   var cell_data = document.createTextNode(msg);
+	   
+	   cell.appendChild(cell_data);
+	   row.appendChild(cell);
+	   return row;
+   }
+
+   
+  window.onload = function(){ fnSubmit(); }
+</script>
+</head>
+<body>
+<h1>이 페이지는 자동으로 업데이트 됩니다.</h1>
+<input type="button" value="실행" id="go" onclick="fnSubmit();"/>
+<br/><br/>
+이 페이지는 <span id = "time">5</span>초 후에 갱신됩니다.
+<br/><br/>
+<table id ="dynamicUpdateArea">
+	<tbody>
+		<tr id="row"><td></td></tr>
+	</tbody>
+</table>
+<div id="test"></div>
+</body>
+</html>
